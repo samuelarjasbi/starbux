@@ -17,13 +17,13 @@ public class ToppingsController {
     private ToppingsService service;
 
     @PostMapping("/add/topping")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN","MODERATOR"})
     public Toppings addTopping(@RequestBody Toppings toppings) {
         return service.saveTopping(toppings);
     }
 
     @PostMapping("/add/toppings")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN","MODERATOR"})
     public List<Toppings> addToppings(@RequestBody List<Toppings> Toppings) {
         return service.saveToppings(Toppings);
     }
@@ -44,7 +44,7 @@ public class ToppingsController {
     }
 
     @PutMapping("/update/topping")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN","MODERATOR"})
     public Toppings updateTopping(@RequestBody Toppings toppings) {
         return service.updateToppings(toppings);
     }

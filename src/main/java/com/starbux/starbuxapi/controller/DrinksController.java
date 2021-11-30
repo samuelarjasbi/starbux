@@ -21,14 +21,14 @@ public class DrinksController {
     private String response;
 
     @PostMapping("/add/drink")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN","MODERATOR"})
     public Drinks addDrink(@RequestBody Drinks drinks) {
 
         return service.saveDrink(drinks);
     }
 
     @PostMapping("/add/drinks")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN","MODERATOR"})
     public List<Drinks> addDrinks(@RequestBody List<Drinks> Drinks) {
         return service.saveDrinks(Drinks);
     }
@@ -51,7 +51,7 @@ public class DrinksController {
     }
 
     @PutMapping("/update/drink")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN","MODERATOR"})
     public Drinks updateDrink(@RequestBody Drinks drinks) {
         return service.updateDrinks(drinks);
     }
