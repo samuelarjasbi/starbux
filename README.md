@@ -1,76 +1,24 @@
-#StarBux
+# Starbux
 
 ## Installation and Configuration
 
-First for creating the required DataBase in MySQL after installing the MySql client, Enter the following command in CMD Prompt,
-
-```bash
-$> mysql -u root -p
-Enter password:
-```
-Then Enter your local Mysql password and You'll see the following details,
-
-```bash
-
-Your MySQL connection id is 1084
-Server version: 8.0.26 MySQL Community Server - GPL
-
-Copyright (c) 2000, 2021, Oracle and/or its affiliates.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql>
-
-```
-Now in MySql Shell Enter:
-
-```bash
-
-mysql> CREATE DATABASE starbux;
-
-```
-now you'll see the following details:
-
-```bash
-
-mysql> CREATE DATABASE starbux;
-Query OK, 1 row affected (0.02 sec)
-
-```
-
-now Clone the repository by the following command:
-
+Clone the repository by the following command:
 
 ```bash
 $> git clone https://github.com/mohammadarjasbi/starbux.git
 ```
 
-now go to the following path for change configs
+Run the following command in terminal or CMD prompt to run dockerized package:
+
 ```bash
-~/starbux/src/main/resource/application.properties
+$> docker-compose up
 ```
 
-in **application.properties** please change value of **spring.datasource.username=** to your data source username ('root' is by default in most of databases) and **spring.datasource.password=** with your databse password, Also change **server.port=** to any port you desire and uncomment debug = true for enabling debug mode.
-```java
-server.port=8089
-spring.datasource.username=root
-spring.datasource.password=password
-spring.datasource.url=jdbc:mysql://localhost:3306/starbux
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
-spring.jpa.hibernate.ddl-auto=create
-spring.jpa.show-sql=true
-#debug = true
+or for background running:
+```bash
+$> docker-compose up -d
 ```
 
-and finally for running the API open CMD or Terminal and go to the Root folder of the project and Enter:
-```bash
-$> mvn spring-boot:run
-```
 
 You'll must see the following details:
 
@@ -83,6 +31,24 @@ You'll must see the following details:
 2021-12-01 02:02:12.959 DEBUG 28636 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Starting application com.starbux.starbuxapi.StarbuxapiApplication with URLs [file:~/starbux/target/classes/]
 2021-12-01 02:02:12.960 DEBUG 28636 --- [  restartedMain] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
 
+```
+
+After that in order to run test cases you have to use the following command **( In order to run tests properly you have to run docker containers first):**
+
+```bash
+$> mvn clean test
+```
+
+You must see
+```bash
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
 ```
 
 
@@ -98,7 +64,7 @@ In order to create a user with Rolles, you can Post a JSON string with custom va
 
 URL (accepted method = post)
 ```bash
-http://localhost:8089/api/auth/signup
+http://localhost:6868/api/auth/signup
 ```
 JSON
 ```bash
@@ -106,11 +72,11 @@ JSON
     "username":"test",
     "password":"1234",
     "email":"test@gmail.com",
-    "roles":["admin","user","mod"] //user for regular users, mod for moderators
+    "role":["admin","user","mod"] //user for regular users, mod for moderators
 }
 ```
 
-and as a result if your sent JSON was correct, you will get:
+and as a result, if your sent JSON was correct, you will get:
 
 ```bash
 {
@@ -174,84 +140,84 @@ Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNjM4MzEyOTI3LCJleHAiOjE2
 **Drink EndPoints**
 
 Add Drink
->`http://localhost:8089/api/products/add/drink` <POST> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
+>`http://localhost:6868/api/products/add/drink` <POST> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
 
 Add list of drinks
->`http://localhost:8089/api/products/add/drinks` <POST> `[{ "name" : string ,"quantity" : int ,"price": Double },{ "name" : string ,"quantity" : int ,"price": Double }]` admin - moderator
+>`http://localhost:6868/api/products/add/drinks` <POST> `[{ "name" : string ,"quantity" : int ,"price": Double },{ "name" : string ,"quantity" : int ,"price": Double }]` admin - moderator
 
 Get all drinks
->`http://localhost:8089/api/products/Drinks` <GET> {} any role
+>`http://localhost:6868/api/products/Drinks` <GET> {} any role
 
 Find a drink by Id
->`http://localhost:8089/api/products/DrinksById/{id}` <GET> `data will get from URL` any role
+>`http://localhost:6868/api/products/DrinksById/{id}` <GET> `data will get from URL` any role
 
 Find a drink by name
->`http://localhost:8089/api/products/Drinks/{name}` <GET> `data will get from URL` any role
+>`http://localhost:6868/api/products/Drinks/{name}` <GET> `data will get from URL` any role
 
 Update a drink
->`http://localhost:8089/api/products/update/drink` <PUT> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
+>`http://localhost:6868/api/products/update/drink` <PUT> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
 
 Delete a drink by id
->`http://localhost:8089/api/products/delete/Drink/{id}` <DELETE> `data will get from URL`  admin 
+>`http://localhost:6868/api/products/delete/Drink/{id}` <DELETE> `data will get from URL`  admin 
 
 **Toppings EndPoints**
 
 Add a topping
->`http://localhost:8089/api/products/add/topping` <POST> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
+>`http://localhost:6868/api/products/add/topping` <POST> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
 
 Add list of toppings
->`http://localhost:8089/api/products/add/toppings` <POST> `[{ "name" : string ,"quantity" : int ,"price": Double },{ "name" : string ,"quantity" : int ,"price": Double }]` admin - moderator
+>`http://localhost:6868/api/products/add/toppings` <POST> `[{ "name" : string ,"quantity" : int ,"price": Double },{ "name" : string ,"quantity" : int ,"price": Double }]` admin - moderator
 
 Get all toppings
->`http://localhost:8089/api/products/toppings` <GET> {} any role
+>`http://localhost:6868/api/products/toppings` <GET> {} any role
 
 Find a topping by Id
->`http://localhost:8089/api/products/toppingsById/{id}` <GET> `data will get from URL` any role
+>`http://localhost:6868/api/products/toppingsById/{id}` <GET> `data will get from URL` any role
 
 Find a topping by name
->`http://localhost:8089/api/products/topping/{name}` <GET> `data will get from URL` any role
+>`http://localhost:6868/api/products/topping/{name}` <GET> `data will get from URL` any role
 
 Update a topping
->`http://localhost:8089/api/products/update/topping` <PUT> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
+>`http://localhost:6868/api/products/update/topping` <PUT> `{ "name" : string ,"quantity" : int ,"price": Double }` admin - moderator
 
 Delete a topping by id
->`http://localhost:8089/api/products/delete/topping/{id}` <DELETE> `data will get from URL`  admin 
+>`http://localhost:6868/api/products/delete/topping/{id}` <DELETE> `data will get from URL`  admin 
 
 
 **Add products to cart**: Any drink will add with a topping or null
 
 Add a drink to cart
->`http://localhost:8089/api/addtocart/addProduct` <POST> `{"drinks_id":string,"toppings_id":string,"userId":string,"qty":string}` any role
+>`http://localhost:6868/api/addtocart/addProduct` <POST> `{"drinks_id":string,"toppings_id":string,"userId":string,"qty":string}` any role
 
 Update a product quantity
->`http://localhost:8089/api/addtocart/updateQtyForCart` <PUT> `{"cartId":string,"userId":string,"qty":string}` any role
+>`http://localhost:6868/api/addtocart/updateQtyForCart` <PUT> `{"cartId":string,"userId":string,"qty":string}` any role
 
 Delete a product form cart
->`http://localhost:8089/api/addtocart/removeProductFromCart` <DELETE> `{"cartId":string,"userId":string}` any role
+>`http://localhost:6868/api/addtocart/removeProductFromCart` <DELETE> `{"cartId":string,"userId":string}` any role
 
 
 **Check out order EndPoints**
 
 Check out order
->`http://localhost:8089/api/order/checkout_order` <POST> `{"userId":string,"deliveryAddress":string}` any role
+>`http://localhost:6868/api/order/checkout_order` <POST> `{"userId":string,"deliveryAddress":string}` any role
 
 Get orders by user id
->`http://localhost:8089/api/order/getOrdersByUserId` <POST> `{"userId":string}` any role
+>`http://localhost:6868/api/order/getOrdersByUserId` <POST> `{"userId":string}` any role
 
 Delete data by order id
->`http://localhost:8089/api/addtocart/deleteOrderById/{id}` <DELETE> `data will get from URL` admin role
+>`http://localhost:6868/api/addtocart/deleteOrderById/{id}` <DELETE> `data will get from URL` admin role
 
 
 **Reports**
 
 The total amount of orders per customer.
->`http://localhost:8089/api/reports/orders` <get> `{}` Admin role
+>`http://localhost:6868/api/reports/orders` <get> `{}` Admin role
 
 Most used toppings for drinks.
->`http://localhost:8089/api/reports/toppings` <get> `{}` Admin role
+>`http://localhost:6868/api/reports/toppings` <get> `{}` Admin role
 
 Delete reports by user-id
->`http://localhost:8089/api/reports/DeleteReportByUserId/{userId}` <DELETE> `data will get from URL` Admin role
+>`http://localhost:6868/api/reports/DeleteReportByUserId/{userId}` <DELETE> `data will get from URL` Admin role
 
 
 ## Description
