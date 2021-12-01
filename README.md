@@ -64,7 +64,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 spring.jpa.hibernate.ddl-auto=create
 spring.jpa.show-sql=true
-//debug = true
+#debug = true
 ```
 
 and finally for running the API open CMD or Terminal and go to the Root folder of the project and Enter:
