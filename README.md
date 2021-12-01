@@ -260,7 +260,7 @@ It's almost my first app with Spring boot framework so do a favor and report any
 
 ## Test Coverage Results
 
-**Total (68%) **
+**Total (68%)**
 
 
 ![alt text](https://i.postimg.cc/25cbTK6C/r.jpg)
